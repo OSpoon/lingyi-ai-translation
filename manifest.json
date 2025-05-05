@@ -4,7 +4,7 @@
   "version": "1.0",
   "name": "灵译-AI翻译大师",
   "description": "基于通义千问大模型的智能翻译插件，支持中英文互译和剪贴板内容识别",
-  "author": "Trae AI",
+  "author": "OSpoon",
   "permissions": ["storage", "clipboardRead", "clipboardWrite"],
   "action": {
     "default_popup": "src/popup/popup.html",
