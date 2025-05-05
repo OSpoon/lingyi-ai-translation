@@ -1,5 +1,5 @@
 <p align="center">
-    <img src="./images/logo.svg" width="35%" />
+    <img src="./images/logo.svg" width="25%" />
 </p>
 
 # 灵译-AI翻译大师 (LingYi - AI Translation)
@@ -19,8 +19,8 @@
 ## UI
 
 <p align="center">
-    <img src="./images/popup-ui.png" width="60%" />
-    <img src="./images/setting-ui.png" width="60%" />
+    <img src="./images/popup-ui.png" width="50%" />
+    <img src="./images/setting-ui.png" width="50%" />
 </p>
 
 
