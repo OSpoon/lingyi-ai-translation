@@ -2,7 +2,7 @@
     <img src="./images/logo.svg" width="35%" />
 </p>
 
-# 灵译-AI翻译大师 (LingYi - AI Translation Master)
+# 灵译-AI翻译大师 (LingYi - AI Translation)
 
 > 基于通义千问大模型的智能翻译浏览器扩展，支持中英文智能互译
 
