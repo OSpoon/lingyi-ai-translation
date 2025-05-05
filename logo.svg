@@ -1,0 +1,19 @@
+<svg width="128" height="128" viewBox="0 0 128 128" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <circle cx="64" cy="64" r="60" fill="url(#gradient)" />
+  <g transform="translate(26, 26) scale(0.6)">
+    <path d="M10 30H60C63.3137 30 66 32.6863 66 36V84C66 87.3137 63.3137 90 60 90H10C6.68629 90 4 87.3137 4 84V36C4 32.6863 6.68629 30 10 30Z" fill="white" opacity="0.9"/>
+    <path d="M68 38H118C121.314 38 124 40.6863 124 44V92C124 95.3137 121.314 98 118 98H68C64.6863 98 62 95.3137 62 92V44C62 40.6863 64.6863 38 68 38Z" fill="white" opacity="0.9"/>
+    <path d="M22 55H48M35 48V62" stroke="#10a37f" stroke-width="5" stroke-linecap="round"/>
+    <path d="M20 70H50" stroke="#10a37f" stroke-width="5" stroke-linecap="round"/>
+    <path d="M80 65H105M80 65V80H105" stroke="#10a37f" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M55 45L75 62L55 79" stroke="#10a37f" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+  <circle cx="64" cy="64" r="58" stroke="white" stroke-width="1" stroke-dasharray="4 4" opacity="0.6" />
+  <circle cx="64" cy="64" r="54" stroke="white" stroke-width="1" stroke-dasharray="4 4" opacity="0.4" />
+  <defs>
+    <linearGradient id="gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#13C79C" />
+      <stop offset="100%" stop-color="#0D8C6D" />
+    </linearGradient>
+  </defs>
+</svg>

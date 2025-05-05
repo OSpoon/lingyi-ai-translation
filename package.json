@@ -1,0 +1,31 @@
+{
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ospoon/lingyi-ai-translation.git"
+  },
+  "name": "lingyi-ai-translation",
+  "description": "灵译-AI翻译大师：基于通义千问大模型的智能翻译工具",
+  "version": "1.0.0",
+  "keywords": [
+    "extension",
+    "browser-extension",
+    "web-extension",
+    "translation",
+    "ai-translation"
+  ],
+  "scripts": {
+    "dev": "extension dev",
+    "start": "extension start",
+    "build": "extension build"
+  },
+  "devDependencies": {
+    "extension": "^2.0.0-rc.23"
+  },
+  "private": true,
+  "author": {
+    "name": "OSpoon",
+    "email": "zxin088@gmail.com",
+    "url": "https://ospoon.cn/"
+  }
+}

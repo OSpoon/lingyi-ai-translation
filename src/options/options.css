@@ -1,0 +1,409 @@
+:root {
+  --primary-color: #10a37f;
+  --primary-hover: #0d8c6d;
+  --secondary-color: #f7f7f8;
+  --border-color: #e5e5e5;
+  --text-color: #353740;
+  --text-light: #6e6e80;
+  --error-color: #ef4146;
+  --success-color: #10a37f;
+  --info-color: #3b82f6;
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --shadow-sm: 0 1px 3px rgba(0,0,0,0.1);
+  --shadow-md: 0 4px 6px -1px rgba(0,0,0,0.1), 0 2px 4px -1px rgba(0,0,0,0.06);
+  --shadow-lg: 0 10px 15px -3px rgba(0,0,0,0.1), 0 4px 6px -2px rgba(0,0,0,0.05);
+  --font-sans: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  width: 100%;
+  min-height: 100vh;
+  font-family: var(--font-sans);
+  font-size: 14px;
+  line-height: 1.5;
+  color: var(--text-color);
+  background-color: #ffffff;
+  overflow-x: hidden;
+}
+
+.app-container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  max-width: 700px;
+  margin: 0 auto;
+  padding: 0;
+}
+
+/* 顶部标题栏 */
+.app-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 20px;
+  border-bottom: 1px solid var(--border-color);
+  background-color: #fff;
+}
+
+.logo-container {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.logo-icon {
+  width: 28px;
+  height: 28px;
+  background-image: url('data:image/svg+xml;charset=utf-8;base64,PHN2ZyB3aWR0aD0iMTI4IiBoZWlnaHQ9IjEyOCIgdmlld0JveD0iMCAwIDEyOCAxMjgiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGNpcmNsZSBjeD0iNjQiIGN5PSI2NCIgcj0iNjAiIGZpbGw9InVybCgjZ3JhZGllbnQpIiAvPjxnIHRyYW5zZm9ybT0idHJhbnNsYXRlKDI2LCAyNikgc2NhbGUoMC42KSI+PHBhdGggZD0iTTEwIDMwSDYwQzYzLjMxMzcgMzAgNjYgMzIuNjg2MyA2NiAzNlY4NEM2NiA4Ny4zMTM3IDYzLjMxMzcgOTAgNjAgOTBIMTBDNi42ODYyOSA5MCA0IDg3LjMxMzcgNCA4NFYzNkM0IDMyLjY4NjMgNi42ODYyOSAzMCAxMCAzMFoiIGZpbGw9IndoaXRlIiBvcGFjaXR5PSIwLjkiLz48cGF0aCBkPSJNNjggMzhIMTE4QzEyMS4zMTQgMzggMTI0IDQwLjY4NjMgMTI0IDQ0VjkyQzEyNCA5NS4zMTM3IDEyMS4zMTQgOTggMTE4IDk4SDY4QzY0LjY4NjMgOTggNjIgOTUuMzEzNyA2MiA5MlY0NEM2MiA0MC42ODYzIDY0LjY4NjMgMzggNjggMzhaIiBmaWxsPSJ3aGl0ZSIgb3BhY2l0eT0iMC45Ii8+PHBhdGggZD0iTTIyIDU1SDQ4TTM1IDQ4VjYyIiBzdHJva2U9IiMxMGEzN2YiIHN0cm9rZS13aWR0aD0iNSIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIi8+PHBhdGggZD0iTTIwIDcwSDUwIiBzdHJva2U9IiMxMGEzN2YiIHN0cm9rZS13aWR0aD0iNSIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIi8+PHBhdGggZD0iTTgwIDY1SDEwNU04MCA2NVY4MEgxMDUiIHN0cm9rZT0iIzEwYTM3ZiIgc3Ryb2tlLXdpZHRoPSI1IiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiLz48cGF0aCBkPSJNNTUgNDVMNzUgNjJMNTUgNzkiIHN0cm9rZT0iIzEwYTM3ZiIgc3Ryb2tlLXdpZHRoPSI1IiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiLz48L2c+PGNpcmNsZSBjeD0iNjQiIGN5PSI2NCIgcj0iNTgiIHN0cm9rZT0id2hpdGUiIHN0cm9rZS13aWR0aD0iMSIgc3Ryb2tlLWRhc2hhcnJheT0iNCA0IiBvcGFjaXR5PSIwLjYiIC8+PGNpcmNsZSBjeD0iNjQiIGN5PSI2NCIgcj0iNTQiIHN0cm9rZT0id2hpdGUiIHN0cm9rZS13aWR0aD0iMSIgc3Ryb2tlLWRhc2hhcnJheT0iNCA0IiBvcGFjaXR5PSIwLjQiIC8+PGRlZnM+PGxpbmVhckdyYWRpZW50IGlkPSJncmFkaWVudCIgeDE9IjAlIiB5MT0iMCUiIHgyPSIxMDAlIiB5Mj0iMTAwJSI+PHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iIzEzQzc5QyIgLz48c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9IiMwRDhDNkQiIC8+PC9saW5lYXJHcmFkaWVudD48L2RlZnM+PC9zdmc+');
+  background-size: contain;
+  background-repeat: no-repeat;
+}
+
+.app-header h1 {
+  font-size: 18px;
+  font-weight: 600;
+  margin: 0;
+}
+
+/* 状态消息 */
+.status-message {
+  min-height: 24px;
+  max-height: 24px;
+  padding: 4px 16px;
+  font-size: 13px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 500;
+  margin: 4px 0 12px;
+  border-radius: var(--radius-sm);
+  flex-shrink: 0;
+  overflow: hidden;
+}
+
+.status-message:empty {
+  display: none;
+  min-height: 0;
+  max-height: 0;
+  padding: 0;
+  margin: 0;
+}
+
+.status-message.error {
+  color: var(--error-color);
+  background-color: rgba(239, 65, 70, 0.1);
+  border: 1px solid rgba(239, 65, 70, 0.3);
+}
+
+.status-message.success {
+  color: var(--success-color);
+  background-color: rgba(16, 163, 127, 0.1);
+  border: 1px solid rgba(16, 163, 127, 0.3);
+}
+
+.status-message.info {
+  color: var(--info-color);
+  background-color: rgba(59, 130, 246, 0.1);
+  border: 1px solid rgba(59, 130, 246, 0.3);
+}
+
+/* 设置容器 */
+.settings-container {
+  flex: 1;
+  padding: 20px;
+  background-color: #fff;
+}
+
+.settings-group {
+  margin-bottom: 28px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.settings-group:last-child {
+  border-bottom: none;
+}
+
+.settings-group h2 {
+  font-size: 16px;
+  font-weight: 600;
+  margin-bottom: 16px;
+  color: var(--text-color);
+}
+
+/* 表单元素 */
+.form-group {
+  margin-bottom: 16px;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 6px;
+  font-weight: 500;
+  font-size: 14px;
+}
+
+.form-hint {
+  margin-top: 4px;
+  font-size: 12px;
+  color: var(--text-light);
+}
+
+input[type="text"],
+input[type="password"],
+select {
+  width: 100%;
+  height: 38px;
+  padding: 8px 36px 8px 12px;
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  font-family: inherit;
+  font-size: 14px;
+  color: var(--text-color);
+  transition: all 0.2s;
+  appearance: none;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2'><path d='M6 9l6 6 6-6'/></svg>");
+  background-repeat: no-repeat;
+  background-position: right 12px center;
+  background-size: 16px;
+}
+
+input[type="text"]:focus,
+input[type="password"]:focus,
+select:focus {
+  outline: none;
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 2px rgba(16, 163, 127, 0.2);
+}
+
+.input-with-action {
+  position: relative;
+  display: flex;
+  width: 100%;
+}
+
+.input-with-action input {
+  padding-right: 42px;
+  flex: 1;
+  background-image: none;
+}
+
+/* 修复眼睛图标按钮 */
+.input-with-action .icon-button {
+  position: absolute;
+  right: 4px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 34px;
+  height: 34px;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: transparent;
+  border-radius: 50%;
+  overflow: visible;
+}
+
+.input-with-action .icon-button svg {
+  width: 20px;
+  height: 20px;
+  display: block;
+  margin: 0 auto;
+  overflow: visible;
+}
+
+input[type="text"],
+input[type="password"] {
+  width: 100%;
+  height: 38px;
+  padding: 8px 12px;
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  font-family: inherit;
+  font-size: 14px;
+  color: var(--text-color);
+  transition: all 0.2s;
+  appearance: none;
+  background-image: none;
+}
+
+select {
+  width: 100%;
+  height: 38px;
+  padding: 8px 36px 8px 12px;
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  font-family: inherit;
+  font-size: 14px;
+  color: var(--text-color);
+  transition: all 0.2s;
+  appearance: none;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%236e6e80' stroke-width='2'><path d='M6 9l6 6 6-6'/></svg>");
+  background-repeat: no-repeat;
+  background-position: right 12px center;
+  background-size: 16px;
+}
+
+/* 按钮样式 */
+button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  border: none;
+  border-radius: var(--radius-sm);
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s;
+  height: 38px;
+  padding: 0 12px;
+}
+
+button:active {
+  transform: scale(0.97);
+}
+
+.primary-button {
+  padding: 8px 16px;
+  background-color: var(--primary-color);
+  color: white;
+}
+
+.primary-button:hover {
+  background-color: var(--primary-hover);
+}
+
+.secondary-button {
+  padding: 8px 12px;
+  background-color: white;
+  color: var(--text-color);
+  border: 1px solid var(--border-color);
+}
+
+.secondary-button:hover {
+  background-color: var(--secondary-color);
+}
+
+.icon-button {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background-color: transparent;
+  color: var(--text-light);
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.icon-button svg {
+  width: 18px;
+  height: 18px;
+}
+
+button svg {
+  width: 16px;
+  height: 16px;
+}
+
+/* 底部区域 */
+.app-footer {
+  flex-shrink: 0;
+  padding: 16px 20px;
+  border-top: 1px solid var(--border-color);
+  background-color: #fff;
+}
+
+.footer-buttons {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.footer-text {
+  font-size: 12px;
+  color: var(--text-light);
+  text-align: center;
+}
+
+/* 暗色模式支持 */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --primary-color: #10a37f;
+    --primary-hover: #13c79c;
+    --secondary-color: #202123;
+    --border-color: #4d4d4f;
+    --text-color: #f1f1f3;
+    --text-light: #acacbe;
+  }
+  
+  body,
+  .app-header,
+  .settings-container,
+  .app-footer {
+    background-color: #343541;
+  }
+  
+  input[type="text"],
+  input[type="password"],
+  select {
+    background-color: #40414f;
+    color: var(--text-color);
+    border-color: var(--border-color);
+  }
+  
+  .secondary-button {
+    background-color: #40414f;
+  }
+  
+  .secondary-button:hover {
+    background-color: #4a4b5a;
+  }
+  
+  .status-message.success {
+    background-color: rgba(16, 163, 127, 0.2);
+  }
+  
+  .status-message.error {
+    background-color: rgba(239, 65, 70, 0.2);
+  }
+  
+  .status-message.info {
+    background-color: rgba(59, 130, 246, 0.2);
+  }
+}
+
+/* 平滑过渡效果 */
+.app-container * {
+  transition: all 0.2s ease;
+}
+
+/* 响应式设计 */
+@media (max-width: 600px) {
+  .settings-container {
+    padding: 16px;
+  }
+  
+  .app-header,
+  .app-footer {
+    padding: 12px 16px;
+  }
+  
+  .footer-buttons {
+    flex-direction: column;
+  }
+  
+  .footer-buttons button {
+    width: 100%;
+  }
+}

@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>灵译-AI翻译大师 - 设置</title>
+  <link rel="stylesheet" href="options.css">
+</head>
+<body>
+  <div class="app-container">
+    <!-- 顶部标题栏 -->
+    <header class="app-header">
+      <div class="logo-container">
+        <div class="logo-icon"></div>
+        <h1>灵译-AI翻译大师设置</h1>
+      </div>
+    </header>
+
+    <!-- 主设置区域 -->
+    <div class="settings-container">
+      <div id="statusMessage" class="status-message"></div>
+      
+      <form id="configForm">
+        <div class="settings-group">
+          <h2>API 设置</h2>
+          
+          <div class="form-group">
+            <label for="apiKey">API 密钥</label>
+            <div class="input-with-action">
+              <input type="password" id="apiKey" placeholder="请输入您的 API 密钥">
+              <button type="button" id="toggleApiKey" class="icon-button" title="显示/隐藏密钥">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                  <path d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path>
+                </svg>
+              </button>
+            </div>
+            <div class="form-hint">在通义千问平台获取 API 密钥</div>
+          </div>
+          
+          <div class="form-group">
+            <label for="apiUrl">API 地址</label>
+            <input type="text" id="apiUrl" placeholder="请输入 API 地址">
+            <div class="form-hint">通义千问兼容 OpenAI 格式的 API 地址：https://dashscope.aliyuncs.com/compatible-mode/v1/chat/completions</div>
+          </div>
+          
+          <div class="form-group">
+            <label for="modelName">模型选择</label>
+            <select id="modelName">
+              <option value="qwen3-235b-a22b">通义千问3(最强)</option>
+              <option value="qwen-max">通义千问 Max</option>
+              <option value="qwen-turbo">通义千问 Turbo</option>
+              <option value="qwen-plus">通义千问 Plus</option>
+            </select>
+            <div class="form-hint">选择所需要使用的大语言模型</div>
+          </div>
+        </div>
+        
+        <div class="settings-group">
+          <h2>翻译设置</h2>
+          
+          <div class="form-group">
+            <label for="targetLanguage">默认目标语言</label>
+            <select id="targetLanguage">
+              <option value="auto">自动检测(中英互译)</option>
+              <option value="zh">始终翻译为中文</option>
+              <option value="en">始终翻译为英文</option>
+            </select>
+            <div class="form-hint">选择默认的翻译目标语言</div>
+          </div>
+        </div>
+        
+        <!-- 底部按钮区可以移动到表单内部 -->
+        <div class="footer-buttons">
+          <button type="button" id="resetBtn" class="secondary-button">恢复默认设置</button>
+          <button type="submit" id="saveBtn" class="primary-button">保存设置</button>
+        </div>
+      </form>
+    </div>
+    
+    <footer class="app-footer">
+      <div class="footer-text">由通义千问大模型提供支持</div>
+    </footer>
+  </div>
+
+  <script src="options.js"></script>
+</body>
+</html>
