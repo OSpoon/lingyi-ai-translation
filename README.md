@@ -1,3 +1,7 @@
+<p align="center">
+    <img src="./images/logo.svg" width="35%" />
+</p>
+
 # 灵译-AI翻译大师 (LingYi - AI Translation Master)
 
 > 基于通义千问大模型的智能翻译浏览器扩展，支持中英文智能互译
@@ -11,6 +15,14 @@
 - 🎛️ 可选择不同的通义千问模型
 - 🌙 支持明/暗模式自适应
 - 📱 响应式设计，支持不同屏幕尺寸
+
+## UI
+
+<p align="center">
+    <img src="./images/popup-ui.png" width="60%" />
+    <img src="./images/setting-ui.png" width="60%" />
+</p>
+
 
 ## 可用脚本
 
