@@ -6,7 +6,7 @@
   },
   "name": "lingyi-ai-translation",
   "description": "灵译-AI翻译大师：基于通义千问大模型的智能翻译工具",
-  "version": "1.0.0",
+  "version": "0.0.1",
   "keywords": [
     "extension",
     "browser-extension",
@@ -19,8 +19,12 @@
     "start": "extension start",
     "build": "extension build"
   },
+  "dependencies": {
+    "vue": "^3.3.4"
+  },
   "devDependencies": {
-    "extension": "^2.0.0-rc.23"
+    "extension": "^2.0.0-rc.23",
+    "@vue/compiler-sfc": "^3.3.4"
   },
   "private": true,
   "author": {

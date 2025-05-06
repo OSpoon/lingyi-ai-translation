@@ -200,159 +200,154 @@ function fallbackDetectLanguage(text) {
   return result;
 }
 
-// 步骤2: 翻译文本
-async function translateText(text, sourceLang, targetLang, client, modelName) {
+// 步骤2: 执行翻译
+async function performTranslation(text, sourceLang, conversationId, client) {
   try {
-    console.log(`执行翻译: ${sourceLang} → ${targetLang}`);
-    
-    // 构建翻译提示词
-    let prompt = '';
-    if (sourceLang === 'zh' && targetLang === 'en') {
-      prompt = `请将以下中文翻译成英文。直接返回英文翻译结果，不要添加任何解释或标记:\n\n${text}`;
-    } else if (sourceLang === 'en' && targetLang === 'zh') {
-      prompt = `请将以下英文翻译成中文。直接返回中文翻译结果，不要添加任何解释或标记:\n\n${text}`;
-    } else {
-      prompt = `请翻译以下内容。直接返回翻译结果，不要添加任何解释或标记:\n\n${text}`;
-    }
-
-    const response = await client.chatCompletions({
-      model: modelName,
-      messages: [
-        {
-          role: "system", 
-          content: "你是一个专业的翻译助手，专注于中英文互译。请直接返回翻译结果，不要添加任何解释、引号、注释或标记。"
-        },
-        {
-          role: "user",
-          content: prompt
-        }
-      ],
-      temperature: 0,
-      max_tokens: 4000
-    });
-
-    return response.choices[0]?.message?.content || '翻译失败';
-  } catch (error) {
-    console.error('翻译过程出错:', error);
-    throw new Error(`翻译失败: ${error.message}`);
-  }
-}
-
-// 主翻译函数
-async function translateWithQwen(text, conversationId = 'default') {
-  try {
-    // 获取配置
-    const { translationConfig } = await chrome.storage.local.get(['translationConfig']);
-    const { apiUrl, apiKey, targetLanguage, modelName } = translationConfig || DEFAULT_CONFIG;
-
-    if (!apiKey) {
-      return {
-        success: false,
-        error: '请先在设置中配置API密钥',
-        translatedText: null,
-        sourceLang: null,
-        targetLang: null
-      };
-    }
-
-    // 创建客户端
-    const client = createApiClient(apiKey, apiUrl);
-
-    // 初始化对话历史（如果不存在）
+    // 获取或初始化对话历史
     if (!conversations[conversationId]) {
       conversations[conversationId] = [];
     }
-
-    // 步骤1: 检测源语言
-    const sourceLang = await detectLanguage(text, client);
-
-    // 步骤2: 确定目标语言
-    let targetLang = targetLanguage;
-    if (targetLang === 'auto') {
-      // 自动检测语言并翻译为相反语言
-      targetLang = sourceLang === 'zh' ? 'en' : 'zh';
-    }
-    console.log(`翻译方向: ${sourceLang} → ${targetLang}`);
-
-    // 步骤3: 执行翻译
-    const translatedText = await translateText(text, sourceLang, targetLang, client, modelName);
-
+    
+    // 确定翻译方向的提示词
+    const targetLang = sourceLang === 'zh' ? 'en' : 'zh';
+    const systemPrompt = sourceLang === 'zh' 
+      ? "你是一个专业的中译英翻译助手。请将用户输入的中文翻译成地道、流畅的英文。只输出翻译结果，不要有任何解释或额外内容。保持原文的格式，包括段落和换行。" 
+      : "你是一个专业的英译中翻译助手。请将用户输入的英文翻译成地道、流畅的中文。只输出翻译结果，不要有任何解释或额外内容。保持原文的格式，包括段落和换行。";
+    
+    // 构建消息历史
+    const messages = [
+      { role: "system", content: systemPrompt },
+      ...conversations[conversationId],
+      { role: "user", content: text }
+    ];
+    
+    // 调用API进行翻译
+    console.log(`开始${sourceLang === 'zh' ? '中译英' : '英译中'}翻译...`);
+    
+    // 获取配置
+    const config = await new Promise((resolve) => {
+      chrome.storage.local.get(['translationConfig'], (result) => {
+        resolve(result.translationConfig || DEFAULT_CONFIG);
+      });
+    });
+    
+    // 流式响应处理函数
+    let fullText = '';
+    const onContent = (delta, accumulated) => {
+      fullText = accumulated;
+      // 向popup发送更新
+      chrome.runtime.sendMessage({
+        action: 'translationUpdate',
+        fullText: accumulated
+      });
+    };
+    
+    // 执行翻译请求
+    const response = await client.chatCompletions({
+      model: config.modelName || "qwen3-235b-a22b",
+      messages: messages,
+      temperature: 0.3,
+      max_tokens: 2000,
+      onContent: onContent // 传入回调函数处理流式响应
+    });
+    
+    // 获取翻译结果
+    const translatedText = response.choices[0]?.message?.content || '';
+    
     // 更新对话历史
-    const currentMessages = conversations[conversationId];
-    currentMessages.push(
-      {
-        role: "user",
-        content: text
-      },
-      {
-        role: "assistant",
-        content: translatedText
-      }
+    conversations[conversationId].push(
+      { role: "user", content: text },
+      { role: "assistant", content: translatedText }
     );
-
-    if (currentMessages.length > 10) {
-      conversations[conversationId] = currentMessages.slice(-10);
+    
+    // 限制对话历史长度，防止过长
+    if (conversations[conversationId].length > 10) {
+      conversations[conversationId] = conversations[conversationId].slice(-10);
     }
-
+    
     return {
-      success: true,
       translatedText,
       sourceLang,
       targetLang
     };
   } catch (error) {
-    console.error('翻译错误:', error);
-    return {
-      success: false,
-      error: `翻译失败: ${error.message}`,
-      translatedText: null,
-      sourceLang: null,
-      targetLang: null
-    };
+    console.error('翻译过程出错:', error);
+    throw error;
   }
 }
 
-function clearConversation(conversationId) {
-  if (conversations[conversationId]) {
-    delete conversations[conversationId];
-    return { success: true };
-  }
-  return { success: false, error: '对话不存在' };
-}
-
+// 监听来自popup的消息
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
-  console.log('收到消息:', request.action);
-
+  // 处理翻译请求
   if (request.action === 'translate') {
-    translateWithQwen(request.text, request.conversationId || 'default')
-      .then(result => {
-        console.log('发送翻译结果');
-        sendResponse(result);
-      })
-      .catch(error => {
-        console.error('处理翻译请求时发生错误:', error);
-        sendResponse({
-          success: false,
-          error: error.message,
-          translatedText: null,
-          sourceLang: null,
-          targetLang: null
+    (async () => {
+      try {
+        // 获取API配置
+        const config = await new Promise((resolve) => {
+          chrome.storage.local.get(['translationConfig'], (result) => {
+            resolve(result.translationConfig || DEFAULT_CONFIG);
+          });
         });
-      });
-    return true;
-  } else if (request.action === 'getConfig') {
+        
+        // 检查API密钥
+        if (!config.apiKey) {
+          sendResponse({
+            error: '请先在设置中配置API密钥'
+          });
+          return;
+        }
+        
+        // 创建API客户端
+        const client = createApiClient(config.apiKey, config.apiUrl);
+        
+        // 检测语言
+        const sourceLang = await detectLanguage(request.text, client);
+        
+        // 执行翻译
+        const result = await performTranslation(
+          request.text,
+          sourceLang,
+          request.conversationId || 'default',
+          client
+        );
+        
+        // 返回结果
+        sendResponse({
+          translatedText: result.translatedText,
+          sourceLang: result.sourceLang,
+          targetLang: result.targetLang
+        });
+      } catch (error) {
+        console.error('处理翻译请求时出错:', error);
+        sendResponse({
+          error: error.message || '翻译失败'
+        });
+      }
+    })();
+    return true; // 表示将异步发送响应
+  }
+  
+  // 处理清除对话历史请求
+  if (request.action === 'clearConversation') {
+    const conversationId = request.conversationId || 'default';
+    conversations[conversationId] = [];
+    sendResponse({ success: true });
+    return;
+  }
+  
+  // 处理获取配置请求
+  if (request.action === 'getConfig') {
     chrome.storage.local.get(['translationConfig'], (result) => {
       sendResponse(result.translationConfig || DEFAULT_CONFIG);
     });
-    return true;
-  } else if (request.action === 'saveConfig') {
+    return true; // 表示将异步发送响应
+  }
+  
+  // 处理保存配置请求
+  if (request.action === 'saveConfig') {
     chrome.storage.local.set({ translationConfig: request.config }, () => {
       sendResponse({ success: true });
     });
-    return true;
-  } else if (request.action === 'clearConversation') {
-    const result = clearConversation(request.conversationId || 'default');
-    sendResponse(result);
-    return false;
+    return true; // 表示将异步发送响应
   }
 });
