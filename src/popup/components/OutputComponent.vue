@@ -13,7 +13,8 @@
         v-if="!isLoading"
         :text="translationResult"
         :speed="25"
-        @finished="onTypewriterFinished"
+        @typing="handleTyping"
+        @finished="handleFinished"
       />
       <div v-else class="loading-indicator">翻译中...</div>
     </div>
@@ -21,21 +22,18 @@
 </template>
 
 <script setup>
-import { ref, watch, nextTick } from 'vue';
+import { ref } from 'vue';
 import TypewriterComponent from './TypewriterComponent.vue';
 
 const props = defineProps({
-  // 要显示的翻译结果
   translationResult: {
     type: String,
     default: '翻译结果将显示在这里'
   },
-  // 翻译方向文本
   translationDirection: {
     type: String,
     default: '翻译结果'
   },
-  // 是否正在加载中
   isLoading: {
     type: Boolean,
     default: false
@@ -43,23 +41,25 @@ const props = defineProps({
 });
 
 const emit = defineEmits(['copy']);
-
-// 结果容器的引用
 const resultContainer = ref(null);
 
-// 处理复制结果事件
-async function handleCopy() {
-  const text = props.translationResult;
-
-  if (text && text !== '翻译结果将显示在这里' && text !== '翻译中...') {
-    emit('copy', text);
+function handleTyping() {
+  if (resultContainer.value) {
+    resultContainer.value.scrollTop = resultContainer.value.scrollHeight;
   }
 }
 
-// 当打字机效果完成时的回调
-function onTypewriterFinished() {
-  // 可以在这里处理打字完成后的逻辑
-  console.log('打字效果完成');
+function handleFinished() {
+  if (resultContainer.value) {
+    resultContainer.value.scrollTop = resultContainer.value.scrollHeight;
+  }
+}
+
+async function handleCopy() {
+  const text = props.translationResult;
+  if (text && text !== '翻译结果将显示在这里' && text !== '翻译中...') {
+    emit('copy', text);
+  }
 }
 </script>
 
@@ -97,6 +97,7 @@ function onTypewriterFinished() {
   color: var(--text-color);
   background-color: #ffffff; /* Fixed background-color */
   transition: all 0.2s ease;
+  scroll-behavior: smooth; /* 添加平滑滚动效果 */
 }
 
 .result-container.loading {
