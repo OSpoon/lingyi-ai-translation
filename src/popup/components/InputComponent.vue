@@ -1,8 +1,8 @@
 <template>
   <div class="input-component">
-    <textarea 
-      v-model="inputText" 
-      placeholder="请输入要翻译的文本..." 
+    <textarea
+      v-model="inputText"
+      placeholder="请输入要翻译的文本..."
       autofocus
       @input="onInputChange"
       ref="textarea"
@@ -67,7 +67,7 @@ function adjustTextareaHeight() {
     if (textarea.value) {
       // 先重置高度，以便正确计算
       textarea.value.style.height = 'auto';
-      
+
       // 计算新高度，但不超过最大高度
       const newHeight = Math.min(textarea.value.scrollHeight, 200);
       textarea.value.style.height = `${newHeight}px`;
@@ -82,10 +82,10 @@ async function handlePaste() {
     const text = await navigator.clipboard.readText();
     inputText.value = text;
     emit('update:modelValue', text);
-    
+
     // 粘贴后调整高度
     adjustTextareaHeight();
-    
+
     // 发送粘贴事件
     emit('paste', text);
   } catch (error) {
@@ -122,6 +122,7 @@ nextTick(() => {
   gap: 12px;
   width: 100%;
   flex: 1;
+  padding: 16px; /* Added padding */
 }
 
 textarea {
@@ -193,11 +194,11 @@ textarea:focus {
     background-color: #40414f;
     color: var(--text-color);
   }
-  
+
   .secondary-button {
     background-color: #40414f;
   }
-  
+
   .secondary-button:hover {
     background-color: #4a4b5a;
   }

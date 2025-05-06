@@ -91,7 +91,7 @@ watch(() => props.isLoading, () => {
   display: flex;
   flex-direction: column;
   width: 100%;
-  margin-bottom: 16px;
+  padding: 0 16px;
 }
 
 .result-header {
@@ -119,7 +119,7 @@ watch(() => props.isLoading, () => {
   font-size: 14px;
   line-height: 1.6;
   color: var(--text-color);
-  background-color: var(--bg-light);
+  background-color: #ffffff;
   transition: all 0.2s ease;
 }
 
@@ -127,9 +127,9 @@ watch(() => props.isLoading, () => {
   opacity: 0.7;
   background-image: linear-gradient(
     to right,
-    var(--bg-light) 0%,
+    #ffffff 0%,
     var(--secondary-color) 50%,
-    var(--bg-light) 100%
+    #ffffff 100%
   );
   background-size: 200% auto;
   animation: shimmer 1.5s infinite;
