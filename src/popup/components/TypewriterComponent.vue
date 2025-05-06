@@ -8,7 +8,7 @@
 </template>
 
 <script setup>
-import { ref, watch, onMounted, computed } from 'vue';
+import { ref, watch, onMounted, onUnmounted, nextTick } from 'vue';
 
 const props = defineProps({
   // 要显示的文本内容
@@ -63,8 +63,14 @@ const startTypewriter = () => {
       // 清除计时器
       clearInterval(typingTimer);
       typingTimer = null;
-      // 触发完成事件
-      emit('finished');
+      // 确保最终内容可见
+      nextTick(() => {
+        setTimeout(() => {
+          scrollToBottom();
+          // 触发完成事件
+          emit('finished');
+        }, 50);
+      });
       return;
     }
     
@@ -85,11 +91,21 @@ watch(() => props.text, (newText, oldText) => {
   }
 });
 
-// 滚动到底部函数
+// 优化的滚动到底部函数
 const scrollToBottom = () => {
-  if (outputElement.value) {
-    outputElement.value.scrollTop = outputElement.value.scrollHeight;
-  }
+  // 使用nextTick确保DOM更新完成
+  nextTick(() => {
+    // 添加小延迟确保渲染完成
+    setTimeout(() => {
+      if (outputElement.value) {
+        // 平滑滚动
+        outputElement.value.scrollTo({
+          top: outputElement.value.scrollHeight,
+          behavior: 'smooth'
+        });
+      }
+    }, 10);
+  });
 };
 
 // 组件挂载后启动打字机效果
@@ -100,11 +116,11 @@ onMounted(() => {
 });
 
 // 在组件卸载前清理计时器
-const onBeforeUnmount = () => {
+onUnmounted(() => {
   if (typingTimer) {
     clearInterval(typingTimer);
   }
-};
+});
 </script>
 
 <style scoped>
@@ -120,6 +136,7 @@ const onBeforeUnmount = () => {
   overflow-y: auto;
   white-space: pre-wrap;
   line-height: 1.6;
+  scroll-behavior: smooth;
 }
 
 /* 光标闪烁效果 */
