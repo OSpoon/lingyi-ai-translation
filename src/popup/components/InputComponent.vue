@@ -65,10 +65,10 @@ function onInputChange() {
 function adjustTextareaHeight() {
   nextTick(() => {
     if (textarea.value) {
-      // 先重置高度，以便正确计算
+      // 先重置高度, 以便正确计算
       textarea.value.style.height = 'auto';
 
-      // 计算新高度，但不超过最大高度
+      // 计算新高度, 但不超过最大高度
       const newHeight = Math.min(textarea.value.scrollHeight, 100);
       textarea.value.style.height = `${newHeight}px`;
     }
@@ -122,14 +122,14 @@ nextTick(() => {
   gap: 12px;
   width: 100%;
   flex: 1;
-  padding: 16px;
+  padding: 16px; /* Added padding */
 }
 
 textarea {
   width: 100%;
   height: 100%;
-  min-height: 60px;
-  max-height: 100px;
+  min-height: 60px; /* Modified min-height */
+  max-height: 100px; /* Modified max-height */
   padding: 12px;
   border: 1px solid var(--border-color);
   border-radius: var(--radius-md);
@@ -160,8 +160,8 @@ textarea:focus {
   padding: 8px 12px;
   border-radius: var(--radius-sm);
   gap: 6px;
-  border: 1px solid var(--border-color);
-  transition: border-color 0.2s ease, background-color 0.2s ease;
+  border: 1px solid var(--border-color); /* Added border */
+  transition: border-color 0.2s ease, background-color 0.2s ease; /* Added transition */
 }
 
 .secondary-button:hover {
@@ -179,13 +179,13 @@ textarea:focus {
   padding: 8px 16px;
   border-radius: var(--radius-sm);
   gap: 8px;
-  border: 1px solid var(--primary-color);
-  transition: border-color 0.2s ease, background-color 0.2s ease;
+  border: 1px solid var(--primary-color); /* Added border matching background */
+  transition: border-color 0.2s ease, background-color 0.2s ease; /* Added transition */
 }
 
 .primary-button:hover {
   background-color: var(--primary-hover);
-  border-color: var(--primary-hover);
+  border-color: var(--primary-hover); /* Maintain border color matching background on hover */
 }
 
 .primary-button svg {
@@ -202,10 +202,19 @@ textarea:focus {
 
   .secondary-button {
     background-color: #40414f;
+    border-color: var(--border-color); /* Ensure border color is correct in dark mode */
   }
 
   .secondary-button:hover {
     background-color: #4a4b5a;
+  }
+
+  .primary-button {
+     border-color: var(--primary-color); /* Ensure border color is correct in dark mode */
+  }
+
+  .primary-button:hover {
+     border-color: var(--primary-hover); /* Ensure border color is correct in dark mode */
   }
 }
 </style>

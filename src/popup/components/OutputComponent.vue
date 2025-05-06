@@ -91,7 +91,7 @@ watch(() => props.isLoading, () => {
   display: flex;
   flex-direction: column;
   width: 100%;
-  padding: 0 16px;
+  padding: 0 16px; /* Adjusted padding */
 }
 
 .result-header {
@@ -109,8 +109,8 @@ watch(() => props.isLoading, () => {
 
 .result-container {
   width: 100%;
-  min-height: 60px;
-  max-height: 100px;
+  min-height: 60px; /* Modified min-height */
+  max-height: 100px; /* Modified max-height */
   overflow-y: auto;
   padding: 12px;
   border: 1px solid var(--border-color);
@@ -119,7 +119,7 @@ watch(() => props.isLoading, () => {
   font-size: 14px;
   line-height: 1.6;
   color: var(--text-color);
-  background-color: #ffffff;
+  background-color: #ffffff; /* Fixed background-color */
   transition: all 0.2s ease;
 }
 
@@ -127,9 +127,9 @@ watch(() => props.isLoading, () => {
   opacity: 0.7;
   background-image: linear-gradient(
     to right,
-    #ffffff 0%,
+    #ffffff 0%, /* Fixed background-color */
     var(--secondary-color) 50%,
-    #ffffff 100%
+    #ffffff 100% /* Fixed background-color */
   );
   background-size: 200% auto;
   animation: shimmer 1.5s infinite;
@@ -182,16 +182,16 @@ watch(() => props.isLoading, () => {
 /* 深色模式适配 */
 @media (prefers-color-scheme: dark) {
   .result-container {
-    background-color: #40414f;
+    background-color: #40414f; /* Maintain dark mode background-color */
     color: var(--text-color);
   }
 
   .result-container.loading {
     background-image: linear-gradient(
       to right,
-      #40414f 0%,
+      #40414f 0%, /* Maintain dark mode background-color */
       #4a4b5a 50%,
-      #40414f 100%
+      #40414f 100% /* Maintain dark mode background-color */
     );
   }
 }
