@@ -221,6 +221,7 @@ onUnmounted(() => {
   gap: 16px; /* Added gap for overall spacing between major sections */
 }
 
+
 .status-message {
   position: fixed;
   bottom: 60px; /* Adjust based on footer height or desired position */
@@ -237,10 +238,12 @@ onUnmounted(() => {
   z-index: 1000;
 }
 
+
 .status-message.show {
   opacity: 1;
   visibility: visible;
 }
+
 
 .app-footer {
   text-align: center;

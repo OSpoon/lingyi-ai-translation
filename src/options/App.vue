@@ -180,7 +180,7 @@ onMounted(() => {
 .form-group input[type="password"],
 .form-group select {
   width: 100%;
-  padding: 0.75rem;
+  /* padding: 0.75rem; */
   border: 1px solid var(--border-color);
   border-radius: var(--radius-sm);
   font-size: 14px;

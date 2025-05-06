@@ -47,139 +47,18 @@ body {
   gap: 12px; /* Modified gap to 12px */
 }
 
-/* 顶部标题栏 */
-/* Note: HeaderComponent now defines its own padding */
-/*
-.app-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 12px 16px;
-  border-bottom: 1px solid var(--border-color);
-}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --primary-color: #10a37f;
+    --primary-hover: #13c79c;
+    --secondary-color: #202123;
+    --border-color: #4d4d4f;
+    --text-color: #f1f1f3;
+    --text-light: #acacbe;
+    --bg-light: #40414f; /* Added --bg-light variable for dark mode */
+  }
 
-.logo-container {
-  display: flex;
-  align-items: center;
-  gap: 8px;
+  body {
+    background-color: #343541;
+  }
 }
-
-.logo-icon {
-  width: 24px;
-  height: 24px;
-  background-image: url('data:image/svg+xml;charset=utf-8;base64,PHN2ZyB3aWR0aD0iMTI4IiBoZWlnaHQ9IjEyOCIgdmlld0JveD0iMCAwIDEyOCAxMjgiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGNpcmNsZSBjeD0iNjQiIGN5PSI2NCIgcj0iNjAiIGZpbGw9InVybCgjZ3JhZGllbnQpIiAvPjxnIHRyYW5zZm9ybT0idHJhbnNsYXRlKDI2LCAyNikgc2NhbGUoMC42KSI+PHBhdGggZD0iTTEwIDMwSDYwQzYzLjMxMzcgMzAgNjYgMzIuNjg2MyA2NiAzNlY4NEM2NiA4Ny4zMTM3IDYzLjMxMzcgOTAgNjAgOTBIMTBDNi42ODYyOSA5MCA0IDg3LjMxMzcgNCA4NFYzNkM0IDMyLjY4NjMgNi42ODYyOSAzMCAxMCAzMFoiIGZpbGw9IndoaXRlIiBvcGFjaXR5PSIwLjkiLz48cGF0aCBkPSJNNjggMzhIMTE4QzEyMS4zMTQgMzggMTI0IDQwLjY4NjMgMTI0IDQ0VjkyQzEyNCA5NS4zMTM3IDEyMS4zMTQgOTggMTE4IDk4SDY4QzY0LjY4NjMgOTggNjIgOTUuMzEzNyA2MiA5MlY0NEM2MiA0MC42ODYzIDY0LjY4NjMgMzggNjggMzhaIiBmaWxsPSJ3aGl0ZSIgb3BhY2h0eT0iMC45Ii8+PHBhdGggZD0iTTIyIDU1SDQ4TTM1IDQ4VjYyIiBzdHJva2U9IiMxMGEzN2YiIHN0cm9rZS13aWR0aD0iNSIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIi8+PHBhdGggZD0iTTIwIDcwSDUwIiBzdHJva2U9IiMxMGEzN2YiIHN0cm9rZS13aWR0aD0iNSIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIi8+PHBhdGggZD0iTTgwIDY1SDEwNU04MCA2NVY4MEgxMDUiIHN0cm9rZT0iIzEwYTM3ZiIgc3Ryb2tlLXdpZHRoPSI1IiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiLz48cGF0aCBkPSJNNTUgNDVMNzUgNjJMNTUgNzkiIHN0cm9rZT0iIzEwYTM3ZiIgc3Ryb2tlLXdpZHRoPSI1IiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5ejpb2luPSJyb3VuZCIvPjxnIHRyYW5zZm9ybT0idHJhbnNsYXRlKDI2LCAyNikgc2NhbGUoMC42KSI+PHBhdGggZD0iTTEwIDMwSDYwQzYzLjMxMzcgMzAgNjYgMzIuNjg2MyA2NiAzNlY4NEM2NiA4Ny4zMTM3IDYzLjMxMzcgOTAgNjAgOTBIMTBDNi42ODYyOSA5MCA0IDg3LjMxMzcgNCA4NFYzNkM0IDMyLjY4NjMgNi42ODYyOSAzMCAxMCAzMFoiIGZpbGw9IndoaXRlIiBvcGFjaXR5PSIwLjkiLz48cGF0aCBkPSJNNjggMzhIMTE4QzEyMS4zMTQgMzggMTI0IDQwLjY4NjMgMTI0IDQ0VjkyQzEyNCA5NS4zMTM3IDEyMS4uMzE0IDk4IDExOCIDk4SDY4QzY0LjY4NjMgOTggNjIgOTUuMzEzNyA2MiA5MlY0NEM2MiA0MC42ODYzIDY0LjY4NjMgMzggNjggMzhaIiBmaWxsPSJ3aGl0ZSIgb3BhY2l0eT0iMC45Ii8+PHBhdGggZD0iTTIyIDU1SDQ4TTM1IDQ4VjYyIiBzdHJva2U9IiMxMGEzN2YiIHN0cm9rZS13aWR0aD0iNSIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIi8+PHBhdGggZD0iTTIwIDcwSDUwIiBzdHJva2U9IiMxMGEzN2YiIHN0cm9rZS13aWR0aD0iNSIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIi8+PHBhdGggZD0iTTgwIDY1SDEwNU04MCA2NVY4MEgxMDUiIHN0cm9rZT0iIzEwYTM3ZiIgc3Ryb2tlLXdpZHRoPSI1IiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiLz48cGF0aCBkPSJNNTUgNDVMNzUgNjJMNTUgNzkiIHN0cm9rZT0iIzEwYTM3ZiIgc3Ryb2tlLXdpZHRoPSI1IiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiLz48L2c+PGNpcmNsZSBjeD0iNjQiIGN5PSI2NCIgcj0iNTgiIHN0cm9rZT0id2hpdGUiIHN0cm9rZS13aWR0aD0iMSIgc3Ryb2tlLWRhc2hhcnJheT0iNCA0IiBvcGFjaXR5PSIwLjYiIC8+PGNpcmNsZSBjeD0iNjQiIGN5PSI2NCIgcj0iNTQiIHN0cm9rZT0id2hpdGUiIHN0cm9rZS13aWR0aD0iMSIgc3Ryb2tlLWRhc2hhcnJheT0iNCA0IiBvcGFciTYyIj48L2RlZnM+PC9zdmc+');
-  background-size: contain;
-  background-repeat: no-repeat;
- }
-@@ -78,7 +82,11 @@
-   display: flex;
-   gap: 8px;
- }
--
-+*/
-+
-+
-+/* Note: Status message is now handled in App.vue's inline styles */
-+/*
- .status-message {
-   min-height: 24px;
-   max-height: 24px;
-@@ -109,8 +117,11 @@
-   padding: 0;
-   margin: 0;
- }
--
--/* 输入区域 */
-+*/
-+
-+/* Input区域 */
-+/* Note: InputComponent now defines its own padding and gap */
-+/*
- .input-section {
-   padding: 16px;
-   display: flex;
-@@ -120,8 +131,11 @@
-   min-height: 0;
-   max-height: 40%;
- }
--
-+*/
-+
-+/* Note: Textarea styles were moved to InputComponent */
-+/*
- textarea {
-   width: 100%;
-   height: 100%;
-@@ -149,8 +163,11 @@
-   gap: 8px;
-   justify-content: flex-end;
- }
--
--/* 结果区域 */
-+*/
-+
-+/* 结果区域 */
-+/* Note: OutputComponent now defines its own margin/padding and border */
-+/*
- .result-section {
-   margin: 0 16px 16px;
-   border: 1px solid var(--border-color);
-@@ -211,8 +228,11 @@
- @keyframes spin {
-   to { transform: rotate(360deg); }
- }
--
--/* 底部 */
-+*/
-+
-+/* 底部 */
-+/* Note: Footer is now handled in App.vue's inline styles */
-+/*
- .app-footer {
-   padding: 8px 16px;
-   display: flex;
-@@ -222,8 +242,11 @@
-   color: var(--text-light);
-   border-top: 1px solid var(--border-color);
- }
--
--/* 按钮样式 */
-+*/
-+
-+/* Button styles */
-+/* Note: Button styles were moved to components */
-+/*
- button {
-   cursor: pointer;
-   border: none;
-@@ -286,6 +309,7 @@
-   width: 18px;
-   height: 18px;
- }
-+*/
- 
- @media (prefers-color-scheme: dark) {
-   :root {
-@@ -295,12 +319,15 @@
-     --border-color: #4d4d4f;
-     --text-color: #f1f1f3;
-     --text-light: #acacbe;
-+    --bg-light: #40414f; /* Added --bg-light variable for dark mode */
-   }
-   
-   body {
-     background-color: #343541;
-   }
-   
-+  /* Note: Textarea and translation result styles moved to components */
-+  /*
-   textarea,
-   .translation-result {
-     background-color: #40414f;
-@@ -326,5 +353,5 @@
-   .status-message.info {
-     background-color: rgba(59, 130, 246, 0.2);
-   }
--}
-+  */
-+}

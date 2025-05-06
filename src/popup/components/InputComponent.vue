@@ -122,7 +122,7 @@ nextTick(() => {
   gap: 12px;
   width: 100%;
   flex: 1;
-  padding: 16px; /* Added padding */
+  padding: 16px;
 }
 
 textarea {
