@@ -109,8 +109,6 @@ watch(() => props.isLoading, () => {
 
 .result-container {
   width: 100%;
-  min-height: 60px; /* Modified min-height */
-  max-height: 100px; /* Modified max-height */
   overflow-y: auto;
   padding: 12px;
   border: 1px solid var(--border-color);

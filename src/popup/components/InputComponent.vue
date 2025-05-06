@@ -122,14 +122,14 @@ nextTick(() => {
   gap: 12px;
   width: 100%;
   flex: 1;
-  padding: 16px; /* Added padding */
+  padding: 0 16px 16px 16px;
 }
 
 textarea {
   width: 100%;
   height: 100%;
-  min-height: 60px; /* Modified min-height */
-  max-height: 100px; /* Modified max-height */
+  min-height: 100px;
+  max-height: 150px;
   padding: 12px;
   border: 1px solid var(--border-color);
   border-radius: var(--radius-md);
