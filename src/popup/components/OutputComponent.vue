@@ -69,7 +69,7 @@ function adjustResultHeight() {
       // 根据内容自动调整结果区域的高度
       const contentHeight = resultContainer.value.scrollHeight;
       // 设置最小和最大高度限制
-      const newHeight = Math.max(80, Math.min(contentHeight, 300));
+      const newHeight = Math.max(60, Math.min(contentHeight, 100));
       resultContainer.value.style.height = `${newHeight}px`;
     }
   });
@@ -109,8 +109,8 @@ watch(() => props.isLoading, () => {
 
 .result-container {
   width: 100%;
-  min-height: 80px;
-  max-height: 300px;
+  min-height: 60px;
+  max-height: 100px;
   overflow-y: auto;
   padding: 12px;
   border: 1px solid var(--border-color);

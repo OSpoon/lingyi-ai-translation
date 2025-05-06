@@ -69,7 +69,7 @@ function adjustTextareaHeight() {
       textarea.value.style.height = 'auto';
 
       // 计算新高度，但不超过最大高度
-      const newHeight = Math.min(textarea.value.scrollHeight, 200);
+      const newHeight = Math.min(textarea.value.scrollHeight, 100);
       textarea.value.style.height = `${newHeight}px`;
     }
   });
@@ -128,8 +128,8 @@ nextTick(() => {
 textarea {
   width: 100%;
   height: 100%;
-  min-height: 80px;
-  max-height: 200px;
+  min-height: 60px;
+  max-height: 100px;
   padding: 12px;
   border: 1px solid var(--border-color);
   border-radius: var(--radius-md);
@@ -160,6 +160,8 @@ textarea:focus {
   padding: 8px 12px;
   border-radius: var(--radius-sm);
   gap: 6px;
+  border: 1px solid var(--border-color);
+  transition: border-color 0.2s ease, background-color 0.2s ease;
 }
 
 .secondary-button:hover {
@@ -177,10 +179,13 @@ textarea:focus {
   padding: 8px 16px;
   border-radius: var(--radius-sm);
   gap: 8px;
+  border: 1px solid var(--primary-color);
+  transition: border-color 0.2s ease, background-color 0.2s ease;
 }
 
 .primary-button:hover {
   background-color: var(--primary-hover);
+  border-color: var(--primary-hover);
 }
 
 .primary-button svg {
