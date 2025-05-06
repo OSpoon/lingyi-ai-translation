@@ -61,29 +61,6 @@ function onTypewriterFinished() {
   // 可以在这里处理打字完成后的逻辑
   console.log('打字效果完成');
 }
-
-// 调整结果区域高度
-function adjustResultHeight() {
-  nextTick(() => {
-    if (resultContainer.value) {
-      // 根据内容自动调整结果区域的高度
-      const contentHeight = resultContainer.value.scrollHeight;
-      // 设置最小和最大高度限制
-      const newHeight = Math.max(60, Math.min(contentHeight, 150));
-      resultContainer.value.style.height = `${newHeight}px`;
-    }
-  });
-}
-
-// 监听翻译结果变化，调整结果区域高度
-watch(() => props.translationResult, () => {
-  adjustResultHeight();
-});
-
-// 监听加载状态变化，调整结果区域高度
-watch(() => props.isLoading, () => {
-  adjustResultHeight();
-});
 </script>
 
 <style scoped>
@@ -109,8 +86,7 @@ watch(() => props.isLoading, () => {
 
 .result-container {
   width: 100%;
-  min-height: 60px; /* Modified min-height */
-  max-height: 150px; /* Modified max-height */
+  max-height: 200px; /* Adjusted max-height */
   overflow-y: auto;
   padding: 12px;
   border: 1px solid var(--border-color);

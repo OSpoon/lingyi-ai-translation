@@ -57,22 +57,7 @@ watch(() => inputText.value, (newValue) => {
 
 // 处理输入变化并调整文本区域高度
 function onInputChange() {
-  adjustTextareaHeight();
   emit('update:modelValue', inputText.value);
-}
-
-// 调整文本区域高度
-function adjustTextareaHeight() {
-  nextTick(() => {
-    if (textarea.value) {
-      // 先重置高度, 以便正确计算
-      textarea.value.style.height = 'auto';
-
-      // 计算新高度, 但不超过最大高度
-      const newHeight = Math.min(textarea.value.scrollHeight, 100);
-      textarea.value.style.height = `${newHeight}px`;
-    }
-  });
 }
 
 // 处理粘贴
@@ -82,10 +67,7 @@ async function handlePaste() {
     const text = await navigator.clipboard.readText();
     inputText.value = text;
     emit('update:modelValue', text);
-
-    // 粘贴后调整高度
-    adjustTextareaHeight();
-
+    
     // 发送粘贴事件
     emit('paste', text);
   } catch (error) {
@@ -108,11 +90,6 @@ function handleTranslate() {
     emit('translate', inputText.value);
   }
 }
-
-// 初始化时调整文本区域高度
-nextTick(() => {
-  adjustTextareaHeight();
-});
 </script>
 
 <style scoped>
