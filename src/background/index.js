@@ -2,7 +2,7 @@
 const DEFAULT_CONFIG = {
   apiUrl: 'https://dashscope.aliyuncs.com/compatible-mode/v1/chat/completions',
   apiKey: '',
-  modelName: 'qwen3-30b-a3b'
+  modelName: 'qwen3-14b'
 };
 
 // 维护对话历史
@@ -258,7 +258,7 @@ async function performTranslation(text, sourceLang, conversationId, client) {
     
     // 执行翻译请求
     const response = await client.chatCompletions({
-      model: config.modelName || "qwen3-30b-a3b",
+      model: config.modelName || "qwen3-14b",
       messages: messages,
       temperature: 0.3,
       max_tokens: 4000,
