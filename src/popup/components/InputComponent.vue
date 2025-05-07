@@ -132,6 +132,8 @@ textarea:focus {
 }
 
 .secondary-button {
+  display: flex;
+  align-items: center;
   background-color: var(--secondary-color);
   color: var(--text-color);
   padding: 8px 12px;
@@ -151,6 +153,8 @@ textarea:focus {
 }
 
 .primary-button {
+  display: flex;
+  align-items: center;
   background-color: var(--primary-color);
   color: white;
   padding: 8px 16px;

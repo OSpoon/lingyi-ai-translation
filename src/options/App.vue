@@ -16,11 +16,6 @@
           @toggle-api-key-visibility="toggleApiKeyVisibility"
         />
         
-        <TranslationSettingsComponent
-          :config="config"
-          @update:config="handleConfigUpdate"
-        />
-        
         <FooterButtonsComponent
           @reset-settings="resetSettings"
           @save-settings="saveSettings" 
@@ -36,14 +31,12 @@
 import { reactive, ref, onMounted } from 'vue';
 import HeaderComponent from './components/HeaderComponent.vue';
 import ApiSettingsComponent from './components/ApiSettingsComponent.vue';
-import TranslationSettingsComponent from './components/TranslationSettingsComponent.vue';
 import FooterButtonsComponent from './components/FooterButtonsComponent.vue';
 import FooterComponent from './components/FooterComponent.vue';
 
 const DEFAULT_CONFIG = {
   apiUrl: 'https://dashscope.aliyuncs.com/compatible-mode/v1/chat/completions',
   apiKey: '',
-  targetLanguage: 'auto',
   modelName: 'qwen3-235b-a22b'
 };
 
@@ -117,6 +110,8 @@ onMounted(() => {
 </script>
 
 <style>
+@import '../styles/variables.css';
+@import '../styles/common.css';
 /* Global styles for options page are typically in a separate CSS file imported in main.js or here */
 /* For this example, specific styles from original App.vue that are still relevant might be here or in options.css */
 

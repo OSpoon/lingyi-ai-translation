@@ -213,7 +213,8 @@ onUnmounted(() => {
 
 <style>
 @import './assets/main.css';
-
+@import '../styles/variables.css';
+@import '../styles/common.css';
 .app-container {
   display: flex;
   flex-direction: column;

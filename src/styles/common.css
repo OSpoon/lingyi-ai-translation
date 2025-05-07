@@ -1,0 +1,50 @@
+/* 下拉框基础样式 */
+select {
+  width: 100%;
+  padding: 8px 12px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border-color);
+  background-color: var(--background);
+  color: var(--text-color);
+  font-size: 14px;
+  cursor: pointer;
+  appearance: none;
+  background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+  background-repeat: no-repeat;
+  background-position: right 8px center;
+  background-size: 16px;
+}
+
+/* 下拉框选项样式 */
+select option {
+  padding: 8px;
+  background-color: var(--background);
+  color: var(--text-color);
+}
+
+/* 深色模式样式 */
+@media (prefers-color-scheme: dark) {
+  select {
+    background-color: var(--background-dark);
+    color: var(--text-color-dark);
+    border-color: var(--border-color-dark);
+  }
+  
+  select option {
+    background-color: var(--background-dark);
+    color: var(--text-color-dark);
+  }
+}
+
+/* 下拉框悬停和焦点状态 */
+select:hover,
+select:focus {
+  border-color: var(--primary-color);
+  outline: none;
+}
+
+/* 禁用状态 */
+select:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}

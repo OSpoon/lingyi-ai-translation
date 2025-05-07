@@ -2,8 +2,7 @@
 const DEFAULT_CONFIG = {
   apiUrl: 'https://dashscope.aliyuncs.com/compatible-mode/v1/chat/completions',
   apiKey: '',
-  targetLanguage: 'auto',
-  modelName: 'qwen3-235b-a22b'
+  modelName: 'qwen3-30b-a3b'
 };
 
 // 维护对话历史
@@ -35,7 +34,7 @@ function createApiClient(apiKey, apiUrl) {
             model: options.model,
             messages: options.messages,
             temperature: options.temperature || 0,
-            max_tokens: options.max_tokens || 2000,
+            max_tokens: options.max_tokens || 4000,
             stream: true // 启用流式响应
           })
         });
@@ -160,31 +159,38 @@ async function detectLanguage(text, client) {
     console.log('开始检测语言类型...');
     
     const response = await client.chatCompletions({
-      model: "qwen-max", // 默认使用通义千问Max
+      model: "qwen3-8b",
       messages: [
         {
           role: "system",
-          content: "你是一个语言检测助手。你的任务是判断用户输入的文本是什么语言。只回复'zh'表示中文或'en'表示英文，不要包含任何其他字符或解释。"
+          content: `你是一个语言检测助手。请以JSON格式返回检测结果，格式如下：
+{
+  "detectedLanguage": "zh|en",
+  "confidence": 0-1之间的数值
+}
+只返回JSON，不要其他任何文字。注：不启用推理模式，no think`
         },
         {
           role: "user",
-          content: text.substring(0, 200) // 只取前200个字符用于检测
+          content: text.substring(0, 200)
         }
       ],
       temperature: 0,
-      max_tokens: 10
+      max_tokens: 100
     });
 
-    const detectedLang = response.choices[0]?.message?.content.trim().toLowerCase();
-
-    // 严格检查返回的结果是否为zh或en，否则使用后备方法
-    if (detectedLang === 'zh' || detectedLang === 'en') {
-      console.log('语言检测结果:', detectedLang);
-      return detectedLang;
-    } else {
-      console.log('模型返回格式不符合预期，使用后备方法检测语言');
-      return fallbackDetectLanguage(text);
+    try {
+      const result = JSON.parse(response.choices[0]?.message?.content.trim());
+      if (result.detectedLanguage === 'zh' || result.detectedLanguage === 'en') {
+        console.log('语言检测结果:', result);
+        return result.detectedLanguage;
+      }
+    } catch (e) {
+      console.warn('解析语言检测结果失败:', e);
     }
+    
+    console.log('模型返回格式不符合预期，使用后备方法检测语言');
+    return fallbackDetectLanguage(text);
   } catch (error) {
     console.error('AI语言检测失败，使用后备方法:', error);
     return fallbackDetectLanguage(text);
@@ -203,17 +209,25 @@ function fallbackDetectLanguage(text) {
 // 步骤2: 执行翻译
 async function performTranslation(text, sourceLang, conversationId, client) {
   try {
-    // 获取或初始化对话历史
     if (!conversations[conversationId]) {
       conversations[conversationId] = [];
     }
     
-    // 确定翻译方向的提示词
     const targetLang = sourceLang === 'zh' ? 'en' : 'zh';
-    const systemPrompt = sourceLang === 'zh' 
-      ? "你是一个专业的中译英翻译助手。请将用户输入的中文翻译成地道、流畅的英文。只输出翻译结果，不要有任何解释或额外内容。保持原文的格式，包括段落和换行。" 
-      : "你是一个专业的英译中翻译助手。请将用户输入的英文翻译成地道、流畅的中文。只输出翻译结果，不要有任何解释或额外内容。保持原文的格式，包括段落和换行。";
-    
+    const systemPrompt = `你是一个专业的${sourceLang === 'zh' ? '中译英' : '英译中'}翻译助手。
+请将用户输入的${sourceLang === 'zh' ? '中文' : '英文'}翻译成地道、流畅的${targetLang === 'zh' ? '中文' : '英文'}。
+请以JSON格式返回翻译结果，格式如下：
+{
+  "translation": "翻译结果文本",
+  "metadata": {
+    "sourceLang": "${sourceLang}",
+    "targetLang": "${targetLang}",
+    "preservedFormats": ["段落", "换行", "标点符号"],
+    "domainSpecific": ["general", "academic", "technical", "literary"] 中的一个
+  }
+}
+只返回JSON，不要其他任何解释或额外内容。注：不启用推理模式，no think`;
+
     // 构建消息历史
     const messages = [
       { role: "system", content: systemPrompt },
@@ -244,32 +258,42 @@ async function performTranslation(text, sourceLang, conversationId, client) {
     
     // 执行翻译请求
     const response = await client.chatCompletions({
-      model: config.modelName || "qwen3-235b-a22b",
+      model: config.modelName || "qwen3-30b-a3b",
       messages: messages,
       temperature: 0.3,
-      max_tokens: 2000,
+      max_tokens: 4000,
       onContent: onContent // 传入回调函数处理流式响应
     });
     
-    // 获取翻译结果
-    const translatedText = response.choices[0]?.message?.content || '';
-    
-    // 更新对话历史
-    conversations[conversationId].push(
-      { role: "user", content: text },
-      { role: "assistant", content: translatedText }
-    );
-    
-    // 限制对话历史长度，防止过长
-    if (conversations[conversationId].length > 10) {
-      conversations[conversationId] = conversations[conversationId].slice(-10);
+    // 解析翻译结果
+    try {
+      const resultJson = JSON.parse(response.choices[0]?.message?.content || '{}');
+      const translatedText = resultJson.translation || '';
+      
+      // 更新对话历史
+      conversations[conversationId].push(
+        { role: "user", content: text },
+        { 
+          role: "assistant", 
+          content: JSON.stringify(resultJson)
+        }
+      );
+      
+      // 限制对话历史长度
+      if (conversations[conversationId].length > 10) {
+        conversations[conversationId] = conversations[conversationId].slice(-10);
+      }
+      
+      return {
+        translatedText,
+        sourceLang,
+        targetLang,
+        metadata: resultJson.metadata
+      };
+    } catch (e) {
+      console.error('解析翻译结果JSON失败:', e);
+      throw new Error('翻译结果格式错误');
     }
-    
-    return {
-      translatedText,
-      sourceLang,
-      targetLang
-    };
   } catch (error) {
     console.error('翻译过程出错:', error);
     throw error;

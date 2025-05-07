@@ -59,10 +59,10 @@
     <div class="form-group">
       <label for="modelName">模型选择</label>
       <select id="modelName" v-model="modelNameModel">
-        <option value="qwen3-235b-a22b">通义千问3(最强)</option>
-        <option value="qwen-max">通义千问 Max</option>
-        <option value="qwen-turbo">通义千问 Turbo</option>
-        <option value="qwen-plus">通义千问 Plus</option>
+        <option value="qwen3-32b">通义千问3-32B</option>
+        <option value="qwen3-14b">通义千问3-14B</option>
+        <option value="qwen3-8b">通义千问3-8B</option>
+        <option value="qwen3-4b">通义千问3-4B</option>
       </select>
       <div class="form-hint">选择所需要使用的大语言模型</div>
     </div>

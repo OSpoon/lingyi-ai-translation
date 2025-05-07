@@ -1,0 +1,16 @@
+:root {
+  /* 浅色模式变量 */
+  --background: #ffffff;
+  --text-color: #353740;
+  --border-color: #e5e5e5;
+  // ...其他已有变量...
+}
+
+/* 深色模式变量 */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background-dark: #202123;
+    --text-color-dark: #f1f1f3;
+    --border-color-dark: #4d4d4f;
+  }
+}
